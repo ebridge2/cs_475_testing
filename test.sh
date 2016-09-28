@@ -18,7 +18,7 @@
 # make a PR
 
 # add to this array as we add more algorithms for the class
-algorithm=(perceptron averaged_perceptron)
+algorithm=(perceptron averaged_perceptron margin_perceptron pegasos)
 #your possible datasetssets
 options=(nlp easy hard bio speech finance vision)
 
@@ -28,9 +28,9 @@ echo "option | algorithm | accuracy | duration"
 for opt in "${options[@]}"; do
     for algo in "${algorithm[@]}"; do
         start=$(($(date +%s%N)/1000000)) # get the time
-        python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --datasets datasets/${opt}.train
+        python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.train
 
-        python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --datasets datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions
+        python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions
         end=$(($(date +%s%N)/1000000))
         duration=$(( end - start ))
 
