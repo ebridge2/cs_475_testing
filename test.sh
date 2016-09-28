@@ -18,8 +18,8 @@
 # make a PR
 
 # add to this array as we add more algorithms for the class
-algorithm=(perceptron averaged_perceptron margin_perceptron pegasos)
-#your possible datasets
+algorithm=(perceptron averaged_perceptron)
+#your possible datasetssets
 options=(nlp easy hard bio speech finance vision)
 
 echo "option | algorithm | accuracy | duration"
@@ -28,14 +28,14 @@ echo "option | algorithm | accuracy | duration"
 for opt in "${options[@]}"; do
     for algo in "${algorithm[@]}"; do
         start=$(($(date +%s%N)/1000000)) # get the time
-        python ${1}classify.py --mode train --algorithm $algo --model-file data/${opt}.perceptron.model --data data/${opt}.train
+        python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --datasets datasets/${opt}.train
 
-        python ${1}classify.py --mode test --model-file data/${opt}.perceptron.model --data data/${opt}.dev --predictions-file data/${opt}.dev.predictions
+        python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --datasets datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions
         end=$(($(date +%s%N)/1000000))
         duration=$(( end - start ))
 
         # just store the output here and echo it back formatted
-        acc="$(python compute_accuracy.py ${opt}.dev ${opt}.dev.predictions)"
+        acc="$(python compute_accuracy.py datasets/${opt}.dev datasets/${opt}.dev.predictions)"
 
         echo "${opt} | $algo | $acc | $duration (ms)"
 
