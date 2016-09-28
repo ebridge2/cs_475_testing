@@ -28,16 +28,21 @@ echo "option | algorithm | accuracy | duration"
 for opt in "${options[@]}"; do
     for algo in "${algorithm[@]}"; do
         start=$(($(date +%s%N)/1000000)) # get the time
-        python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.train
+        # capture stderr in a vara
+        trainout=$(python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.train 2>&1)
 
-        python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions
+        # capture stderr in a vara
+        testout=$(python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions 2>&1)
         end=$(($(date +%s%N)/1000000))
         duration=$(( end - start ))
 
-        # just store the output here and echo it back formatted
-        acc="$(python compute_accuracy.py datasets/${opt}.dev datasets/${opt}.dev.predictions)"
+        # make sure we didn't get any errors
+        if [[ $trainout == *"Error"* ]] || [[ $testout == *"Error"* ]]; then
+            echo "Your code doesn't work for this algorithm :("
+        else
+            acc="$(python compute_accuracy.py datasets/${opt}.dev datasets/${opt}.dev.predictions)"
 
-        echo "${opt} | $algo | $acc | $duration (ms)"
-
+            echo "${opt} | $algo | $acc | $duration (ms)"
+        fi
     done
 done
