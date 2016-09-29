@@ -17,4 +17,4 @@ To reset the branch to the latest commit.
 
 ## Disclaimers
  
-This repo is not guaranteed to be up to date with homeworks on the day they come out (ie, it may not test the latest additions to our model), but expect it to be generally updated within a day or two of each homework release.
+This repo is not guaranteed to be up to date with homeworks on the day they come out (ie, it may not test the latest algorithm additions), but expect it to be generally updated within a day or two of each homework release.
