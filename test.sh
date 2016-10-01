@@ -39,7 +39,7 @@ for opt in "${options[@]}"; do
 
         # make sure we didn't get any errors
         if [[ $trainout == *"Error"* ]] || [[ $testout == *"Error"* ]]; then
-            echo "Your code doesn't work for this algorithm :("
+            echo "Your code doesn't work for algorithm $algo :("
             if [[ $trainout == *"Error"* ]]; then
                 echo "$trainout"
             else
