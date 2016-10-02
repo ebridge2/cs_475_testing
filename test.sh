@@ -31,10 +31,10 @@ for opt in "${options[@]}"; do
         start=$(python -c'import time; print(str(time.time()))') # get the time
 
         # capture stderr in a vara
-        trainout=$(python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.train 2>&1)
+        trainout=$(python ${1}classify.py --mode train --algorithm $algo --model-file datasets/${opt}.${algo}.model --data datasets/${opt}.train 2>&1)
 
         # capture stderr in a vara
-        testout=$(python ${1}classify.py --mode test --model-file datasets/${opt}.perceptron.model --data datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions 2>&1)
+        testout=$(python ${1}classify.py --mode test --model-file datasets/${opt}.${algo}.model --data datasets/${opt}.dev --predictions-file datasets/${opt}.dev.predictions 2>&1)
         duration=$(python -c'import time; print(str(time.time() - float('$start')))')
 
         # make sure we didn't get any errors
