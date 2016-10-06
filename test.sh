@@ -18,9 +18,9 @@
 # make a PR
 
 # add to this array as we add more algorithms for the class
-algorithm=(perceptron averaged_perceptron margin_perceptron pegasos)
+algorithm=(perceptron averaged_perceptron margin_perceptron pegasos knn)
 #your possible datasetssets
-options=(nlp easy hard bio speech finance vision)
+options=(easy hard bio speech finance vision nlp)
 
 echo "option | algorithm | accuracy | duration"
 
