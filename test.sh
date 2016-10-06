@@ -20,7 +20,7 @@
 # add to this array as we add more algorithms for the class
 algorithm=(perceptron averaged_perceptron margin_perceptron pegasos knn)
 #your possible datasetssets
-options=(easy hard bio speech finance vision nlp)
+options=(speech.mc easy hard bio speech finance vision nlp)
 
 echo "option | algorithm | accuracy | duration"
 
