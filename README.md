@@ -4,7 +4,28 @@ Make a PR, post an issue, or send us a message if you have issues running this.
 
 ## Usage:
 ```
-./test.sh --code /path/to/your/code/ --verbose 1 # adds error messages
+# standard usage
+python test.py --path /path/to/your/code/ --verbose 0 --cmd 0 --clean 1
+
+# Detailed Usage Information
+python test.py --help
+# optional arguments:
+  -h, --help            show this help message and exit
+  --path PATH, -p PATH  The path to your code directory, containing all
+                        relevant python dependencies and classify.py. Note
+                        that we assume your directory is passed as
+                        /path/to/code/.
+  --verbose VERBOSE, -v VERBOSE
+                        Boolean value indicating whether you want the error
+                        messages. (0 or 1).
+  --clean CLEAN, -c CLEAN
+                        Boolean value indicating whether you want to eliminate
+                        all existing *.pyc files in your code directory. These
+                        can somethimes cause issues.
+  --cmd CMD             Boolean value indicating whether you want to output
+                        the commands as well.
+
+
 ```
 
 Note that if you want to clear intermediate files produced by your runs (ie, if you wanted to just have the same repo for every homework, and are lazy like me and don't want to manually delete the model files and stuff in between, or just to reset the repo if you play around with the shell script), you can call:
