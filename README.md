@@ -12,7 +12,10 @@ $ python test.py --path /path/to/your/code/ --verbose 0 --cmd 0 --clean 1
 
 $ python test.py --help
 
-# optional arguments:
+usage: test.py [-h] [--path PATH] [--verbose VERBOSE] [--clean CLEAN]
+               [--cmd CMD]
+
+optional arguments:
   -h, --help            show this help message and exit
   --path PATH, -p PATH  The path to your code directory, containing all
                         relevant python dependencies and classify.py. Note
@@ -20,13 +23,14 @@ $ python test.py --help
                         /path/to/code/.
   --verbose VERBOSE, -v VERBOSE
                         Boolean value indicating whether you want the error
-                        messages. (0 or 1).
+                        messages. (0 or 1). (default is 1)
   --clean CLEAN, -c CLEAN
                         Boolean value indicating whether you want to eliminate
                         all existing *.pyc files in your code directory. These
-                        can somethimes cause issues.
+                        can somethimes cause issues (0 or 1). (default is 0)
   --cmd CMD             Boolean value indicating whether you want to output
-                        the commands as well.
+                        the commands as well (0 or 1). (default is 0)
+
 
 
 ```
