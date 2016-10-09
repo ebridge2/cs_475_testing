@@ -5,10 +5,10 @@ Make a PR, post an issue, or send us a message if you have issues running this.
 ## Usage:
 ```
 # standard usage
-python test.py --path /path/to/your/code/ --verbose 0 --cmd 0 --clean 1
+$ python test.py --path /path/to/your/code/ --verbose 0 --cmd 0 --clean 1
 
 # Detailed Usage Information
-python test.py --help
+$ python test.py --help
 # optional arguments:
   -h, --help            show this help message and exit
   --path PATH, -p PATH  The path to your code directory, containing all
