@@ -82,12 +82,12 @@ def main():
                         classify.py.\n Note that we assume your directory is\
                         passed as /path/to/code/.")
     parser.add_argument("--verbose", "-v", help="Boolean value indicating whether \
-                        you want the error messages.\n (0 or 1).", default=1)
+                        you want the error messages.\n (0 or 1). (default is 1)", default=1)
     parser.add_argument("--clean", "-c", help="Boolean value indicating whether \
                         you want to eliminate all existing\n*.pyc files in your code \
-                        directory. These can somethimes cause issues.", default=0)
+                        directory. These can somethimes cause issues (0 or 1). (default is 0)", default=0)
     parser.add_argument("--cmd", help="Boolean value indicating whether \
-                        you want to output the commands as well.", default=0)
+                        you want to output the commands as well (0 or 1). (default is 0)", default=0)
     result = parser.parse_args()
     test = Test(result.path, result.verbose, result.clean, result.cmd)
     test.run()
