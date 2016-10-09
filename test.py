@@ -14,7 +14,7 @@ import time
 
 class Test:
     algorithms = {"perceptron" : 0, "averaged_perceptron" : 0, "margin_perceptron" : 0,
-                 "pegasos" : 0, "knn" : 1}
+                 "pegasos" : 0, "knn" : 1, "distance_knn" : 1}
     bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp"]
     mc_datasets = ["speech.mc"]
    
