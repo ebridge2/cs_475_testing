@@ -18,10 +18,11 @@ class Test:
     bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp"]
     mc_datasets = ["speech.mc"]
    
-    def __init__(self, code, verbose, clean):
+    def __init__(self, code, verbose, clean, cmd_full):
         print "algorithm | accuracy | duration"
         self.code = code
         self.verbose = verbose
+        self.cmd_full = cmd_full
         if clean:
             clean_cmd = "rm " + self.code + "*.pyc"
             self.execute_cmd(clean_cmd)
@@ -36,7 +37,7 @@ class Test:
                 if self.algorithms[algorithm] > 0:
                     for dataset in self.mc_datasets:
                         self.run_dataset(algorithm, dataset)
-            except ValueError as e:
+            except Exception as e:
                 print str(e)
         pass
 
@@ -44,7 +45,6 @@ class Test:
         cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
               algo + " --model-file datasets/" + dataset + "." + algo + ".model --data datasets/" +\
               dataset + ".train"
-        print(cmd_train)
         cmd_test = "python " + self.code + "classify.py --mode test --model-file datasets/" +\
               dataset + "." + algo + ".model --data datasets/" + dataset + ".dev " +\
               "--predictions-file datasets/" + dataset + ".dev.predictions"
@@ -60,6 +60,8 @@ class Test:
 
     def execute_cmd(self, cmd, algorithm=None):
         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+        if self.cmd_full:
+            print cmd
         out, err = p.communicate()
         code = p.returncode
         if code:
@@ -84,8 +86,10 @@ def main():
     parser.add_argument("--clean", "-c", help="Boolean value indicating whether \
                         you want to eliminate all existing\n*.pyc files in your code \
                         directory. These can somethimes cause issues.", default=0)
+    parser.add_argument("--cmd", help="Boolean value indicating whether \
+                        you want to output the commands as well.", default=0)
     result = parser.parse_args()
-    test = Test(result.path, result.verbose, result.clean)
+    test = Test(result.path, result.verbose, result.clean, result.cmd)
     test.run()
 
 
