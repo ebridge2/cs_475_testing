@@ -18,10 +18,13 @@ class Test:
     bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp"]
     mc_datasets = ["speech.mc"]
    
-    def __init__(self, code, verbose):
+    def __init__(self, code, verbose, clean):
         print "algorithm | accuracy | duration"
         self.code = code
         self.verbose = verbose
+        if clean:
+            clean_cmd = "rm " + self.code + "*.pyc"
+            self.execute_cmd(clean_cmd)
         pass
 
     def run(self):
@@ -41,6 +44,7 @@ class Test:
         cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
               algo + " --model-file datasets/" + dataset + "." + algo + ".model --data datasets/" +\
               dataset + ".train"
+        print(cmd_train)
         cmd_test = "python " + self.code + "classify.py --mode test --model-file datasets/" +\
               dataset + "." + algo + ".model --data datasets/" + dataset + ".dev " +\
               "--predictions-file datasets/" + dataset + ".dev.predictions"
@@ -54,14 +58,16 @@ class Test:
         print str(dataset + " | " + acc[:-2] + " | " + '%.4f' % (run_time,) + "(s)")
         pass
 
-    def execute_cmd(self, cmd, algorithm):
+    def execute_cmd(self, cmd, algorithm=None):
         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
         out, err = p.communicate()
         code = p.returncode
         if code:
-            err_mssg = "Your code did not work for algorithm: " + algorithm
+            err_mssg = ""
+            if algorithm is not None:
+                err_mssg += "Your code did not work for algorithm: " + algorithm
             if self.verbose:
-                raise ValueError(err_mssg + "\nError  " + str(code) + ": \n" + err)
+                err_mssg += "\nError  " + str(code) + ": \n" + err
             else:
                 raise ValueError(err_mssg)
         return out, err
@@ -69,14 +75,17 @@ class Test:
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--code", "-c", help="The path to your code directory,\
+    parser.add_argument("--path", "-p", help="The path to your code directory,\
                         containing all relevant\npython dependencies and \
                         classify.py.\n Note that we assume your directory is\
                         passed as /path/to/code/.")
     parser.add_argument("--verbose", "-v", help="Boolean value indicating whether \
-                        you want the error messages.\n (0 or 1).")
+                        you want the error messages.\n (0 or 1).", default=1)
+    parser.add_argument("--clean", "-c", help="Boolean value indicating whether \
+                        you want to eliminate all existing\n*.pyc files in your code \
+                        directory. These can somethimes cause issues.", default=0)
     result = parser.parse_args()
-    test = Test(result.code, result.verbose)
+    test = Test(result.path, result.verbose, result.clean)
     test.run()
 
 
