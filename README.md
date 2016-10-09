@@ -4,7 +4,7 @@ Make a PR, post an issue, or send us a message if you have issues running this.
 
 ## Usage:
 ```
-./test.sh /path/to/your/code/folder/
+./test.sh --code /path/to/your/code/ --verbose 1 # adds error messages
 ```
 
 Note that if you want to clear intermediate files produced by your runs (ie, if you wanted to just have the same repo for every homework, and are lazy like me and don't want to manually delete the model files and stuff in between, or just to reset the repo if you play around with the shell script), you can call:
