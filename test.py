@@ -55,7 +55,7 @@ class Test:
         cmd_cmp = "python compute_accuracy.py datasets/" + dataset + ".dev datasets/" + \
                   dataset + ".dev.predictions"
         (acc, err) = self.execute_cmd(cmd_cmp, algo)
-        print str(dataset + " | " + acc[:-2] + " | " + '%.4f' % (run_time,) + "(s)")
+        print str(dataset + " | " + acc[:-1] + " | " + '%.4f' % (run_time,) + "(s)")
         pass
 
     def execute_cmd(self, cmd, algorithm=None):
