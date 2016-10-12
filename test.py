@@ -15,6 +15,7 @@ import time
 class Test:
     algorithms = {"perceptron" : 0, "averaged_perceptron" : 0, "margin_perceptron" : 0,
                  "pegasos" : 0, "knn" : 1, "distance_knn" : 1, "adaboost" : 1}
+    algorithms = {'adaboost': 0}
     bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp"]
     mc_datasets = ["speech.mc"]
    
@@ -64,8 +65,6 @@ class Test:
             print cmd
         out, err = p.communicate()
         code = p.returncode
-        if self.verbose:
-            print out 
         if code:
             err_mssg = ""
             if algorithm is not None:
