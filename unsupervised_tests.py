@@ -58,7 +58,6 @@ class Test:
                 cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev.predictions"
                 (nclus, err) = self.execute_cmd(cmd_clus, self.algo)
                 nclus = re.split('\n', nclus) 
-                print nclus
                 print str(dataset + " | " + acc[:-1] + " | " + nclus[-2] + " | " + "%.4f" % (run_time,) + "(s)")
      
         pass
