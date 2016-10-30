@@ -18,7 +18,7 @@ class Test:
     mc_datasets = ["speech.mc"]
    
     def __init__(self, code, verbose, clean, cmd_full, algorithm):
-        print "algorithm | variation of info | number of clusters | duration"
+        print "datasets | variation of info | number of clusters | duration"
         self.code = code
         self.verbose = verbose
         self.cmd_full = cmd_full
@@ -39,8 +39,9 @@ class Test:
 
     def lambda_means(self):
         lambdas = [0.0, 1.0, 2.0]
-        for dataset in (self.bin_datasets + self.mc_datasets):
-            for lambd in lambdas:
+        for lambd in lambdas:
+            print "lambda = " + str(lambd)
+            for dataset in (self.bin_datasets + self.mc_datasets):
                 cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
                   self.algo + " --model-file datasets/" + dataset +"." + self.algo + ".model --data datasets/" +\
                   dataset + ".train --cluster-lambda " + str(lambd) + " --clustering-training-iterations " + "10"
