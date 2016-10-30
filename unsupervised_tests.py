@@ -1,5 +1,18 @@
-class Test:
+#
+# a python script to automate testing
+#
+# written by Eric Bridgeford
+#
+# Usage:
+# python unsupervised_tests.py /path/to/your/code/
+#
 
+from argparse import ArgumentParser
+from subprocess import Popen, PIPE
+import time
+
+
+class Test:
     bin_datasets = ["easy", "bio", "speech", "finance", "vision", "nlp"]
     mc_datasets = ["speech.mc"]
    
@@ -16,31 +29,35 @@ class Test:
         pass
 
     def run(self):
+
         if self.algo == "lambda_means":
             self.lambda_means()
-        else if self.algo == "nb_clustesring":
+        elif self.algo == "nb_clustering":
             self.naive_bayes()
         pass
 
-    def lambda_means():
+    def lambda_means(self):
         lambdas = [0.0, 1.0, 2.0]
-        for lambd in lambdas:
-            algorithm = "lambda_means"
-            cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
-              self.algo + " --model-file datasets/" + dataset + "." + ".model --data datasets/" +\
-              dataset + ".train --cluster-lambda " + str(lambd) + " --clustering-training-iterations " + " 10"
-            start = time.time()
-            self.execute_cmd(cmd_train, self.algo)
-            self.execute_cmd(cmd_test(cmd_test, self.algo)
-            run_time = time.time() - start
-            cmd_cmp = "python cluster_accuracy.py datasets/" + dataset + ".dev datasets/" + \
-                dataset + ".dev.predictions"
-            (acc, err) = self.execute_cmd(cmd_cmp, self.algo)
-            cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev datasets/" +\
-                dataset + ".dev.predictions"
-            (nclus, err) = self.execute_cmd(cmd_clus, self.algo)
-            print str(dataset + " | " + acc[:-1] + " | " + nclus[:-1] + " | " + "%.4f" % (run_time,) + "(s)")
- 
+        for dataset in (self.bin_datasets + self.mc_datasets):
+            for lambd in lambdas:
+                cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
+                  self.algo + " --model-file datasets/" + dataset +"." + self.algo + ".model --data datasets/" +\
+                  dataset + ".train --cluster-lambda " + str(lambd) + " --clustering-training-iterations " + "10"
+                cmd_test = "python " + self.code + "classify.py --mode test --model-file datasets/" +\
+                    dataset + "." + self.algo + ".model --data datasets/" + dataset + ".dev " +\
+                    "--predictions-file datasets/" + dataset + ".dev.predictions"
+                start = time.time()
+                self.execute_cmd(cmd_train, self.algo)
+                self.execute_cmd(cmd_test, self.algo)
+                run_time = time.time() - start
+                cmd_cmp = "python cluster_accuracy.py datasets/" + dataset + ".dev datasets/" + \
+                    dataset + ".dev.predictions"
+                (acc, err) = self.execute_cmd(cmd_cmp, self.algo)
+                cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev datasets/" +\
+                    dataset + ".dev.predictions"
+                (nclus, err) = self.execute_cmd(cmd_clus, self.algo)
+                print str(dataset + " | " + acc[:-1] + " | " + nclus[:-1] + " | " + "%.4f" % (run_time,) + "(s)")
+     
         pass
 
     def naive_bayes():
