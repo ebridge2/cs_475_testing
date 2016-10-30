@@ -14,7 +14,7 @@ import re
 
 
 class Test:
-    bin_datasets = ["easy", "bio", "speech", "finance", "vision", "nlp"]
+    bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp", "small_clusters"]
     mc_datasets = ["speech.mc"]
    
     def __init__(self, code, verbose, clean, cmd_full, algorithm):
@@ -38,10 +38,11 @@ class Test:
         pass
 
     def lambda_means(self):
-        lambdas = [0.0, 1.0, 2.0]
-        for lambd in lambdas:
-            print "lambda = " + str(lambd)
-            for dataset in (self.bin_datasets + self.mc_datasets):
+        lambdas = [0.0]
+
+        for dataset in (self.bin_datasets + self.mc_datasets):
+            for lambd in lambdas:
+                print "lambda = " + str(lambd)
                 cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
                   self.algo + " --model-file datasets/" + dataset +"." + self.algo + ".model --data datasets/" +\
                   dataset + ".train --cluster-lambda " + str(lambd) + " --clustering-training-iterations " + "10"
