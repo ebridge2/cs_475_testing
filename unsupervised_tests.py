@@ -10,6 +10,7 @@
 from argparse import ArgumentParser
 from subprocess import Popen, PIPE
 import time
+import re
 
 
 class Test:
@@ -53,10 +54,11 @@ class Test:
                 cmd_cmp = "python cluster_accuracy.py datasets/" + dataset + ".dev datasets/" + \
                     dataset + ".dev.predictions"
                 (acc, err) = self.execute_cmd(cmd_cmp, self.algo)
-                cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev datasets/" +\
-                    dataset + ".dev.predictions"
+                cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev.predictions"
                 (nclus, err) = self.execute_cmd(cmd_clus, self.algo)
-                print str(dataset + " | " + acc[:-1] + " | " + nclus[:-1] + " | " + "%.4f" % (run_time,) + "(s)")
+                nclus = re.split('\n', nclus) 
+                print nclus
+                print str(dataset + " | " + acc[:-1] + " | " + nclus[-2] + " | " + "%.4f" % (run_time,) + "(s)")
      
         pass
 
