@@ -39,7 +39,6 @@ class Test:
 
     def lambda_means(self):
         lambdas = [0.0]
-
         for dataset in (self.bin_datasets + self.mc_datasets):
             for lambd in lambdas:
                 print "lambda = " + str(lambd)
@@ -64,7 +63,28 @@ class Test:
         pass
 
     def naive_bayes():
-
+        nclusts = [3]
+        for dataset in (self.bin_datasets + self.mc_datasets):
+            for n in nclusts:
+                print "lambda = " + str(lambd)
+                cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
+                  self.algo + " --model-file datasets/" + dataset +"." + self.algo + ".model --data datasets/" +\
+                  dataset + ".train --num-clusters " + str(n) + " --clustering-training-iterations " + "10"
+                cmd_test = "python " + self.code + "classify.py --mode test --model-file datasets/" +\
+                    dataset + "." + self.algo + ".model --data datasets/" + dataset + ".dev " +\
+                    "--predictions-file datasets/" + dataset + ".dev.predictions"
+                start = time.time()
+                self.execute_cmd(cmd_train, self.algo)
+                self.execute_cmd(cmd_test, self.algo)
+                run_time = time.time() - start
+                cmd_cmp = "python cluster_accuracy.py datasets/" + dataset + ".dev datasets/" + \
+                    dataset + ".dev.predictions"
+                (acc, err) = self.execute_cmd(cmd_cmp, self.algo)
+                cmd_clus = "python number_clusters.py datasets/" + dataset + ".dev.predictions"
+                (nclus, err) = self.execute_cmd(cmd_clus, self.algo)
+                nclus = re.split('\n', nclus) 
+                print str(dataset + " | " + acc[:-1] + " | " + nclus[-2] + " | " + "%.4f" % (run_time,) + "(s)")
+     
         pass
 
     def execute_cmd(self, cmd, algorithm=None):
