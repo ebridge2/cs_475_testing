@@ -14,7 +14,7 @@ import re
 
 
 class Test:
-    bin_datasets = ["easy", "hard", "bio", "speech", "finance", "vision", "nlp"]#, "small_clusters"]
+    bin_datasets = ["small_clusters", "easy", "hard", "bio", "speech", "finance", "vision", "nlp"]#, "small_clusters"]
     mc_datasets = ["speech.mc"]
    
     def __init__(self, code, verbose, clean, cmd_full, algorithm):
@@ -62,11 +62,11 @@ class Test:
      
         pass
 
-    def naive_bayes():
+    def naive_bayes(self):
         nclusts = [3]
         for dataset in (self.bin_datasets + self.mc_datasets):
             for n in nclusts:
-                print "lambda = " + str(lambd)
+                print "nclusts = " + str(n)
                 cmd_train = "python " + self.code + "classify.py --mode train --algorithm " +\
                   self.algo + " --model-file datasets/" + dataset +"." + self.algo + ".model --data datasets/" +\
                   dataset + ".train --num-clusters " + str(n) + " --clustering-training-iterations " + "10"
