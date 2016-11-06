@@ -14,7 +14,7 @@ import re
 
 
 class Test:
-    bin_datasets = ["small_clusters", "easy", "hard", "bio", "speech", "finance", "vision", "nlp"]#, "small_clusters"]
+    bin_datasets = ["small_clusters", "easy", "hard", "bio", "speech", "finance", "vision"]#, "small_clusters"]
     mc_datasets = ["speech.mc"]
    
     def __init__(self, code, verbose, clean, cmd_full, algorithm):
